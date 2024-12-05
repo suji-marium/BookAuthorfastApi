@@ -14,17 +14,3 @@ class Book(SQLModel,table=True):
     author_id:int=Field(foreign_key="author.id")
 
     author: Author | None =Relationship(back_populates="books")
-
-    # @model_validator(mode="before")
-    # def check_published_date(cls,values):
-    #     published_date=values.get("published_date")
-    #     if published_date and published_date>date.today():
-    #         raise ValueError("Published date cannot be in the future.")
-    #     return values
-
-    @field_validator('title')
-    @classmethod
-    def title_must_not_be_empty(cls,v: str) -> str:
-        if v.strip() == "":
-            raise ValueError("Title cannot be empty")
-        return v
